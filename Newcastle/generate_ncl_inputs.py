@@ -22,13 +22,22 @@ gauges_pos = pd.read_csv(data_folder + '/gauges_pos.csv', delimiter=',')
 gauges_pos = gauges_pos.values[:, 1:]
 time_values = [0, 3600 * 1, 600, 3600 * 3]
 # setup input object
-input_obj = InputHipims(dem_data=dem_file, num_of_sections=num_gpus,
+input_obj = InputHipims(dem_data=dem_file, num_of_sections=1,
                                case_folder=case_folder)
 input_obj.set_runtime(time_values)
 input_obj.set_rainfall(rain_mask=rain_mask_obj.array, rain_source=rain_source)
 input_obj.set_gauges_position(gauges_pos=gauges_pos)
 # write input files
-input_obj.write_input_files()
-input_obj.Summary.display()
-# save input object
-input_obj.save_object('obj_in')
+def setup_model():
+    args = sys.argv
+    if len(args)==2:
+        num_gpus = int(args[0])
+        input_obj_MG = input_obj.decomposite_domain(num_gpus)
+        input_obj_MG.write_input_files()
+        input_obj_MG.Summary.display()
+        # save input object
+        input_obj_MG.save_object('obj_in')
+    else:
+        raise IOError('Only one int parameter is needed.')
+if __name__=='__main__':
+    setup_model()
