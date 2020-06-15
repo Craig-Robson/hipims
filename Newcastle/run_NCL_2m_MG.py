@@ -9,7 +9,7 @@ from hipims_io.Raster import Raster
 file_path = os.path.dirname(os.path.abspath(__file__))
 data_folder = file_path # data folder is the same with this script
 # case_folder is the path to store input and output data of Hipims
-case_folder = file_path+'/Model' 
+case_folder = os.path.dirname(file_path)+'/Model_IO' 
 # the absolute path of the model executable file
 model_name = os.path.dirname(file_path)+'/release/bin/hipims-flood-mgpus'
 def run_mg(case_folder, model_name, num_gpus=8):
