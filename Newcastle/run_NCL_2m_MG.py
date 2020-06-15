@@ -22,7 +22,7 @@ def run_mg(case_folder, model_name, num_gpus=8):
                         rain_source_mat.transpose() / 3600 / 1000]
     gauges_pos = pd.read_csv(data_folder + '/gauges_pos.csv', delimiter=',')
     gauges_pos = gauges_pos.values[:, 1:]
-    time_values = [0, 3600 * 3, 600, 3600 * 3]
+    time_values = [0, 3600 * 1, 600, 3600 * 3]
     input_obj = InputHipims(dem_data=dem_file, num_of_sections=num_gpus,
                                case_folder=case_folder)
     input_obj.set_runtime(time_values)
