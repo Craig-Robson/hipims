@@ -37,6 +37,7 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     os.chdir(input_obj.case_folder)
     os.system(model_name)
     end = time.perf_counter()
+    time.sleep(2)
     print('Model runtime (s):')
     print(end - start)
 
