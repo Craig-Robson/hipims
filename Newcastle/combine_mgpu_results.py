@@ -5,6 +5,7 @@ Created on TUE Jun 16 2020
 @author: Xiaodong Ming
 """
 import os
+import time
 import numpy as np
 import hipims_io as hp
 file_path = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +24,7 @@ def combine_save(obj_out=obj_out):
     np.savetxt('time_steps.csv', times, fmt='%g', delimiter=',')
     print('gauge data saved')
     # save grid data
+    time.sleep(1)
     grid_file_tags = obj_out.grid_file_tags
     for file_tag in grid_file_tags:
         obj_h = obj_out.read_grid_file(file_tag)
