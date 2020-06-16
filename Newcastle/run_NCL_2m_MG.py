@@ -42,4 +42,4 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     print(end - start)
 
 if __name__ == '__main__':
-    run_mg(model_name, run_time=[0, 3600, 600, 108000])
+    run_mg(model_name, rain_source_file=file_path+'/rain_source_data_1.csv', run_time=[0, 1800, 600, 108000])
