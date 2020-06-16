@@ -1,6 +1,7 @@
 import json
 import time
 import run_NCL_2m_MG
+import combine_mgpu_results
 
 import pandas as pandas
 from kafka import KafkaConsumer
@@ -22,7 +23,8 @@ for message in consumer:
 
         df1 = pandas.read_json('test.json')
         # print(df1)
-        df1.to_csv('/home/nxm8/Newcastle/Data/rain_source_data_1.csv', encoding='utf-8', index=False, index_label=False, header=None)
+        df1.to_csv('rain_source_data_1.csv', encoding='utf-8', index=False, index_label=False, header=None)
         time.sleep(5)
         print('data set up...')
-        run_NCL_2m_MG.run_mg()
+        run_NCL_2m_MG.run_mg(rain_source_file='rain_source_data_1.csv')
+        combine_mgpu_results.combine_save()
