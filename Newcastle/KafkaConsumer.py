@@ -1,3 +1,4 @@
+import os
 import json
 import time
 import run_NCL_2m_MG
@@ -26,5 +27,6 @@ for message in consumer:
         df1.to_csv('rain_source_data_1.csv', encoding='utf-8', index=False, index_label=False, header=None)
         time.sleep(5)
         print('data set up...')
-        run_NCL_2m_MG.run_mg(rain_source_file='rain_source_data_1.csv')
+        rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
+        run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file)
         combine_mgpu_results.combine_save()
