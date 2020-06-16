@@ -5,6 +5,7 @@ Created on TUE Jun 16 2020
 @author: Xiaodong Ming
 """
 import os
+import numpy as np
 import hipims_io as hp
 file_path = os.path.dirname(os.path.abspath(__file__))
 # output_folder is the path to store output data of Hipims
