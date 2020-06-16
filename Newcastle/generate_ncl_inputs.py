@@ -4,7 +4,7 @@ import time
 import numpy as np
 import pandas as pd
 from hipims_io import InputHipims
-#from hipims_io import OutputHipims
+from hipims_io import OutputHipims
 from hipims_io.Raster import Raster
 file_path = os.path.dirname(os.path.abspath(__file__))
 data_folder = file_path # data folder is the same with this script
@@ -37,6 +37,11 @@ def setup_model():
         input_obj_MG.Summary.display()
         # save input object
         input_obj_MG.save_object('obj_in')
+        obj_out = OutputHipims(input_obj_MG)
+        output_file_tags = ['h_'+str(t) for t in np.arange(time_values[0], time_values[1]+time_values[2], time_values[2])]
+        output_file_tags.append('h_max_'+str(time_values[1]))
+        obj_out.grid_file_tags = output_file_tags
+        obj_out.save_object('obj_out')
     else:
         raise IOError('Only one int parameter is needed.')
 if __name__=='__main__':
