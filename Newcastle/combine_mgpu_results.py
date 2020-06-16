@@ -13,9 +13,10 @@ file_path = os.path.dirname(os.path.abspath(__file__))
 output_folder = os.path.dirname(file_path)+'/Outputs'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
+time.sleep(5)
 obj_out = hp.load_object('obj_out')
 os.chdir(output_folder)
-
+input()
 def combine_save(obj_out=obj_out):
     # save gauge data
     gauges_pos, times, values = obj_out.read_gauges_file('h')
