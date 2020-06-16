@@ -28,5 +28,5 @@ for message in consumer:
         time.sleep(5)
         print('data set up...')
         rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
-        run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file)
+        run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
         combine_mgpu_results.combine_save()
