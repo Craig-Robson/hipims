@@ -21,6 +21,8 @@ for f in files:
 obj_out = hp.load_object('obj_out')
 os.chdir(output_folder)
 def combine_save(obj_out=obj_out):
+    if hasattr(obj_out, 'Summary'):
+        obj_out.Summary.write_readme(output_folder+'/model_infor.txt')
     # save gauge data
     gauges_pos, times, values = obj_out.read_gauges_file('h')
     np.savetxt('gauges_pos.csv', gauges_pos, fmt='%g', delimiter=',')
