@@ -5,6 +5,7 @@ Created on TUE Jun 16 2020
 @author: Xiaodong Ming
 """
 import os
+import glob
 import time
 import numpy as np
 import hipims_io as hp
@@ -13,10 +14,12 @@ file_path = os.path.dirname(os.path.abspath(__file__))
 output_folder = os.path.dirname(file_path)+'/Outputs'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
-time.sleep(5)
+# clean output folder
+files = glob.glob(output_folder+'/*')
+for f in files:
+    os.remove(f)
 obj_out = hp.load_object('obj_out')
 os.chdir(output_folder)
-input()
 def combine_save(obj_out=obj_out):
     # save gauge data
     gauges_pos, times, values = obj_out.read_gauges_file('h')
@@ -25,10 +28,11 @@ def combine_save(obj_out=obj_out):
     np.savetxt('time_steps.csv', times, fmt='%g', delimiter=',')
     print('gauge data saved')
     # save grid data
-    time.sleep(1)
     grid_file_tags = obj_out.grid_file_tags
     for file_tag in grid_file_tags:
         obj_h = obj_out.read_grid_file(file_tag)
         obj_h.to_osgeo_raster(file_tag)
         print(file_tag+'.tif saved')
-    
+
+if __name__ == '__main__':
+    combine_save()
