@@ -33,12 +33,12 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     obj_out.grid_file_tags = output_file_tags
     obj_out.save_object('obj_out')
     input_obj.Summary.display()
+    time.sleep(5)
     # run model
     os.chdir(input_obj.case_folder)
     os.system(model_name)
     end = time.perf_counter()
-    time.sleep(2)
-    print('Model runtime (s):')
+    print('Hipims runtime (s):')
     print(end - start)
 
 if __name__ == '__main__':
