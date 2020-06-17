@@ -371,6 +371,7 @@ void run(cuDataBank& bank, std::vector<int> device_list, unsigned int domain_id,
   raster_writer.write(h_max, "h_max", t_all, output_directory.c_str());
   printf("Written maximum inundated depth of domain %d.\n", domain_id);
   barrier.wait();
+  sleep(30);
 
 }
 
