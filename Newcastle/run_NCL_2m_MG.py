@@ -30,7 +30,7 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
         input_obj.write_runtime_file()
     obj_out = hp.OutputHipims(input_obj)
     output_file_tags = ['h_'+str(t) for t in np.arange(run_time[0], run_time[1]+run_time[2], run_time[2])]
-    output_file_tags.append('h_max_'+str(run_time[1]))
+    #output_file_tags.append('h_max_'+str(run_time[1]))
     obj_out.grid_file_tags = output_file_tags
     obj_out.save_object(case_path+'obj_out')
     input_obj.Summary.display()
