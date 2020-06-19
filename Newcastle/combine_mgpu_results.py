@@ -15,9 +15,9 @@ output_folder = os.path.dirname(file_path)+'/Outputs'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 # clean output folder
-files = glob.glob(output_folder+'/*')
-for f in files:
-    os.remove(f)
+# files = glob.glob(output_folder+'/*')
+# for f in files:
+#     os.remove(f)
 obj_out = hp.load_object('obj_out')
 os.chdir(output_folder)
 def combine_save(obj_out=obj_out):
