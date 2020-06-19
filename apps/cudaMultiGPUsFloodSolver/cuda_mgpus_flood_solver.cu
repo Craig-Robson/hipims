@@ -426,12 +426,12 @@ int main(){
   cuDataBank bank("halo.dat", device_list);
 
   spinning_barrier barrier(bank.domains_size());
-  sleep(30);
+  //sleep(30);
   std::vector <std::thread> my_threads;
   for (unsigned int i = 0; i < bank.domains_size(); i++){
     my_threads.push_back(std::thread(run, std::ref(bank), device_list, i, std::ref(barrier)));
   }
-  sleep(30);
+  //sleep(30);
   for (unsigned int i = 0; i < bank.domains_size(); i++){
     my_threads[i].join();
   }
