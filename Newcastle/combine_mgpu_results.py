@@ -11,7 +11,7 @@ import numpy as np
 import hipims_io as hp
 file_path = os.path.dirname(os.path.abspath(__file__))
 # output_folder is the path to store output data of Hipims
-output_folder = os.path.dirname(file_path)+'/Outputs'
+output_folder = '/hipims/Outputs'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 # clean output folder
