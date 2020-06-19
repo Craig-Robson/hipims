@@ -29,15 +29,15 @@ def combine_save(obj_out=obj_out):
     print('gauges_pos:')
     print(gauges_pos)
     input('Press Enter to continue')
-    np.savetxt('gauges_pos.csv', gauges_pos, fmt='%g', delimiter=',')
-    np.savetxt('gauges_depth.csv', values, fmt='%g', delimiter=',')
-    np.savetxt('time_steps.csv', times, fmt='%g', delimiter=',')
+    np.savetxt(output_folder + '/gauges_pos.csv', gauges_pos, fmt='%g', delimiter=',')
+    np.savetxt(output_folder + '/gauges_depth.csv', values, fmt='%g', delimiter=',')
+    np.savetxt(output_folder + '/time_steps.csv', times, fmt='%g', delimiter=',')
     print('gauge data saved')
     # save grid data
     grid_file_tags = obj_out.grid_file_tags
     for file_tag in grid_file_tags:
         obj_h = obj_out.read_grid_file(file_tag)
-        obj_h.to_osgeo_raster(file_tag)
+        obj_h.to_osgeo_raster(output_folder + "/" + file_tag)
         print(file_tag+'.tif saved')
 
 if __name__ == '__main__':
