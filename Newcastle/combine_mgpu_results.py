@@ -28,7 +28,6 @@ def combine_save(obj_out=obj_out):
     gauges_pos, times, values = obj_out.read_gauges_file('h')
     print('gauges_pos:')
     print(gauges_pos)
-    input('Press Enter to continue')
     np.savetxt(output_folder + '/gauges_pos.csv', gauges_pos, fmt='%g', delimiter=',')
     np.savetxt(output_folder + '/gauges_depth.csv', values, fmt='%g', delimiter=',')
     np.savetxt(output_folder + '/time_steps.csv', times, fmt='%g', delimiter=',')
