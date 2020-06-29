@@ -36,8 +36,8 @@ def combine_save(obj_out=obj_out):
     grid_file_tags = obj_out.grid_file_tags
     for file_tag in grid_file_tags:
         obj_h = obj_out.read_grid_file(file_tag)
-        obj_h.to_osgeo_raster(output_folder + "/" + file_tag)
-        print(file_tag+'.tif saved')
+        obj_h.write_asc(os.path.join(output_folder, file_tag+'.gz'))
+        print(file_tag+'.gz saved')
 
 if __name__ == '__main__':
     combine_save()
