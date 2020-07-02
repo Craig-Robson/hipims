@@ -6,6 +6,7 @@ import combine_mgpu_results
 
 import pandas as pandas
 from kafka import KafkaConsumer
+import KafkaProducer
 
 # consumer = KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('utf-8')),
 #                          bootstrap_servers='19scomps002:9092')
@@ -30,3 +31,4 @@ for message in consumer:
         rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
         run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
         combine_mgpu_results.combine_save()
+        KafkaProducer.send_files()
