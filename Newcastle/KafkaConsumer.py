@@ -30,5 +30,10 @@ for message in consumer:
         print('data set up...')
         rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
         run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
-        combine_mgpu_results.combine_save()
+        try:
+            combine_mgpu_results.combine_save()
+        except Exception as e:
+            print(e)
+            #Ignore any exceptions for now.
+            pass
         KafkaProducer.send_files()
