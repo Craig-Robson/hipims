@@ -6,6 +6,7 @@ output_path = "/hipims/Outputs"
 output_files = glob.glob(output_path + "/*.gz")
 
 def send_files():
+    print("Connecting to Kafka as producer")
     # Set maxiumum request size to 25000000 bytes (25MB)
     producer = KafkaProducer(bootstrap_servers="10.79.253.132:30002", max_request_size=25000000)
     for file in output_files:

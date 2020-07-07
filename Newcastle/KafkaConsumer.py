@@ -37,3 +37,5 @@ for message in consumer:
             #Ignore any exceptions for now.
             pass
         KafkaProducer.send_files()
+        # Exit execution
+        break
