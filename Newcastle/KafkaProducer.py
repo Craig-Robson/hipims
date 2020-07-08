@@ -19,7 +19,7 @@ def send_files():
         file_data = file_handle.read()
         print("file size: " + str(len(file_data)) + " bytes")
         # This might be slow since we're reading the entire file to bytes
-        response = producer.send(topic="hipims", value=file_data, key=filename)
+        response = producer.send(topic="hipims", value=file_data, key=filename.encode("utf-8"))
         try:
             response.get(timeout=10)
         except KafkaError as e:
