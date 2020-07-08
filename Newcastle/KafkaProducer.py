@@ -17,7 +17,7 @@ def send_files():
         print("sending " + filename)
         file_handle = open(file, 'rb')
         file_data = file_handle.read()
-        print("file size: " + len(file_data) + " bytes")
+        print("file size: " + str(len(file_data)) + " bytes")
         # This might be slow since we're reading the entire file to bytes
         response = producer.send(topic="hipims", value=file_data, key=filename)
         try:
