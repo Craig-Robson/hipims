@@ -32,7 +32,7 @@ def setup_model():
     args = sys.argv
     if len(args)==2:
         num_gpus = int(args[1])
-        input_obj_MG = input_obj.decomposite_domain(num_gpus)
+        input_obj_MG = input_obj.set_num_of_sections(num_gpus)
         input_obj_MG.write_input_files()
         input_obj_MG.Summary.display()
         # save input object
