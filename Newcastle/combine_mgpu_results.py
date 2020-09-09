@@ -18,7 +18,7 @@ if not os.path.exists(output_folder):
 # files = glob.glob(output_folder+'/*')
 # for f in files:
 #     os.remove(f)
-obj_out = hp.load_object('obj_out')
+obj_out = hp.load_input_object('obj_out')
 os.chdir(output_folder)
 def combine_save(obj_out=obj_out):
     if hasattr(obj_out, 'Summary'):
