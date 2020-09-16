@@ -36,7 +36,7 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     input_obj.Summary.display()
     time.sleep(5)
     # run model
-    os.chdir(input_obj.case_folder)
+    os.chdir(input_obj.get_case_folder())
     os.system(model_name)
     end = time.perf_counter()
     print('Hipims runtime (s):')
