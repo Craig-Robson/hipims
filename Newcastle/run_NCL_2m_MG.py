@@ -17,7 +17,7 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     run_time: [0, 10800, 600, 108000]
     """
     start = time.perf_counter()
-    input_obj = hp.load_object(case_path+'/obj_in')
+    input_obj = hp.load_input_object(case_path+'/obj_in')
     if rain_source_file is not None:
         rain_source_mat = np.loadtxt(rain_source_file, 
                                      delimiter=',')
