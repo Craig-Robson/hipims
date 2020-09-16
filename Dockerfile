@@ -49,7 +49,7 @@ VOLUME /hipims/Outputs
 
 # Kafka broker address
 # Change the second address below to change the Kafka broker address
-RUN sed -i 's/10.79.253.132:30002/10.3.224.15:30002/g' Newcastle/KafkaConsumer.py
+RUN find Newcastle -type f -name 'Kafka*.py' -exec sed -i 's/10.79.253.132:30002/10.3.224.15:30002/g' {} \;
 
 # Entrypoint, comment out either one of the CMD instructions
 # Run on local
