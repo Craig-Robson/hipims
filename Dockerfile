@@ -19,7 +19,7 @@ RUN conda install python=3.6
 RUN conda install -y gdal
 RUN conda install -c conda-forge pyshp fiona kafka-python
 # install hipims
-RUN pip install hipims_io=0.4.9
+RUN pip install hipims_io==0.4.9
 
 # Set CUDA_ROOT
 ENV CUDA_ROOT /usr/local/cuda/bin
