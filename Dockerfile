@@ -47,10 +47,6 @@ RUN python Newcastle/generate_ncl_inputs.py 4
 #Mount output directories. Must be container directory
 VOLUME /hipims/Outputs
 
-# Kafka broker address
-# Change the second address below to change the Kafka broker address
-RUN find Newcastle -type f -name 'Kafka*.py' -exec sed -i 's/10.79.253.132:30002/10.3.224.15:30002/g' {} \;
-
 # Entrypoint, comment out either one of the CMD instructions
 # Run on local
 # CMD git pull && python3 Newcastle/run_NCL_2m_MG.py && python3 Newcastle/combine_mgpu_results.py
