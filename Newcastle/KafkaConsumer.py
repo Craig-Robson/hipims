@@ -23,7 +23,7 @@ if broker_address == "":
 consumer = KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('utf-8')),
                          bootstrap_servers=broker_address)
 
-consumer.subscribe(['hipims_res'])
+consumer.subscribe(['hipims_forecast'])
 for message in consumer:
     if message is not None:
         if message.topic == "hipims_forecast":
