@@ -23,9 +23,8 @@ RUN pip install hipims_io==0.4.9
 
 # Set CUDA_ROOT
 ENV CUDA_ROOT /usr/local/cuda/bin
-RUN apt-get update && apt-get install -y wget cmake python3-pip
+RUN apt-get install -y wget cmake python3-pip
 
-RUN apt-get update && apt-get install -y git
 # get hipims code, input data, and python script to setup and run hipims model
 RUN mkdir -p /hipims
 COPY apps /hipims/apps
