@@ -30,7 +30,7 @@ for message in consumer:
             print(message)
             data = gzip.decompress(message.value)
 
-            with open('rain_source_data_1.csv', encoding='utf-8', mode='w+') as rain_source:
+            with open('rain_source_data_1.csv', mode='wb+') as rain_source:
                 rain_source.write(data)
 
             time.sleep(5)
