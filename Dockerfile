@@ -25,10 +25,15 @@ RUN pip install hipims_io==0.4.9
 ENV CUDA_ROOT /usr/local/cuda/bin
 RUN apt-get update && apt-get install -y wget cmake python3-pip
 
-RUN mkdir -p Newcastle_Docker
 RUN apt-get update && apt-get install -y git
 # get hipims code, input data, and python script to setup and run hipims model
-RUN git clone https://github.com/flood-PREPARED/hipims.git
+RUN mkdir -p /hipims
+COPY apps /hipims/apps
+COPY hipims_io /hipims/hipims_io
+COPY lib /hipims/lib
+COPY Newcastle /hipims/Newcastle
+COPY CMakeLists.txt /hipims
+COPY LICENSE.txt /hipims
 #RUN pwd
 # compile hipims model
 WORKDIR hipims
