@@ -1,17 +1,16 @@
 import glob
-import os
+
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
 
 
-
-def send_files():
-    print("Connecting to Kafka as producer")
+def send_files(broker_address: str):
+    print(f"Connecting to Kafka at {broker_address}")
     output_path = "/hipims/Outputs"
     output_files = glob.glob(output_path + "/*.gz")
     print(output_files)
     # Set maxiumum request size to 25000000 bytes (25MB)
-    producer = KafkaProducer(bootstrap_servers="10.79.253.132:30002", max_request_size=25000000)
+    producer = KafkaProducer(bootstrap_servers=broker_address, max_request_size=25000000)
     for file in output_files:
         filename = file[file.rfind("/") + 1:len(file)]
         print("sending " + filename)
@@ -26,3 +25,5 @@ def send_files():
             print(e)
             pass
         file_handle.close()
+    producer.flush()
+    producer.close()
