@@ -44,7 +44,7 @@ consumer.subscribe(topics)
 for message in consumer:
     if message is not None:
         if message.topic == "hipims_forecast":
-            print(f"Received {len(message.value) + len(message.key)} bytes at {datetime.now()}")
+            print(f"Received {len(message.value) + len(message.key)} bytes")
             print("Unzipping forecasts")
             data = gzip.decompress(message.value)
             tmp = tempfile.mkdtemp()
@@ -55,7 +55,7 @@ for message in consumer:
                 extract.extractall(tmp)
 
             # Unzipped forecasts located in /tmp/{random directory} (Use the tmp variable)
-
+            print(f"Starting simulation at {datetime.now()}")
             # TODO Update run_NCL_2m_MG.run_mg to use directory as input
             # with open('rain_source_data_1.csv', mode='wb+') as rain_source:
             #     rain_source.write(data)
@@ -70,7 +70,7 @@ for message in consumer:
                 print(e)
                 # Ignore any exceptions for now.
                 pass
-            print("Sending output...")
+            print(f"Simulation ended at {datetime.now()}. Sending output...")
             KafkaProducer.send_files(broker_address)
             print("Cleaning up input files")
             os.remove(tmp_zip.name)
