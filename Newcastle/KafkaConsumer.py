@@ -4,6 +4,7 @@ import os
 import time
 
 from kafka import KafkaConsumer
+from kafka.admin import KafkaAdminClient, NewTopic
 
 import KafkaProducer
 import combine_mgpu_results
@@ -13,19 +14,33 @@ import zipfile
 import shutil
 from datetime import datetime
 
-# consumer = KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-#                          bootstrap_servers='19scomps002:9092')
-
 broker_address = os.getenv("BROKER_ADDRESS")
 if broker_address == "":
     print(f"Error: Kafka broker address not found. Define broker address at environment variable BROKER_ADDRESS")
     exit(1)
 
+topics = ["hipims_forecast"]
+producer_topics = ["hipims"]
+# Consumer can pull up to 25 MB
+consumer = KafkaConsumer(bootstrap_servers=broker_address, max_partition_fetch_bytes=25000000)
+# Check for current made topics
+current_topics = consumer.topics()
+topics_to_create = set(topics).union(set(producer_topics)) - current_topics
+# Create new topics if it does not exist
+# By default Kafka will automatically create the topics if the consumer subscribes to a topic that does not exist
+# However, Kafka replies the clients that the topic doesn't exist before creating the topics,
+# causing the consumers to fail
+# In Java, the consumers will throw an exception
+# But in Python, the consumers will silently fail (if logging is not configured)
+admin_client = KafkaAdminClient(bootstrap_servers=broker_address)
+new_topics = []
+for name in topics_to_create:
+    print(f"Topic {name} does not exist. Creating one")
+    new_topics.append(NewTopic(name=name, num_partitions=1, replication_factor=1))
+admin_client.create_topics(new_topics=new_topics, validate_only=False)
+admin_client.close()
 
-consumer = KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-                         bootstrap_servers=broker_address)
-
-consumer.subscribe(['hipims_forecast'])
+consumer.subscribe(topics)
 for message in consumer:
     if message is not None:
         if message.topic == "hipims_forecast":
