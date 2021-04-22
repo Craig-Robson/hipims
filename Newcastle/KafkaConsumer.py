@@ -56,7 +56,23 @@ for message in consumer:
 
             # Unzipped forecasts located in /tmp/{random directory} (Use the tmp variable)
             print(f"Starting simulation at {datetime.now()}")
-            # TODO Update run_NCL_2m_MG.run_mg to use directory as input
+            for forecast_file in os.listdir(tmp):
+                print(f"Running simulator for {forecast_file}...")
+                run_NCL_2m_MG.run_mg(rain_source_file=os.path.join(tmp, forecast_file), run_time=[0, 10800, 600, 108000])
+                print(f"Combining results...")
+                try:
+                    combine_mgpu_results.combine_save()
+                except Exception as e:
+                    print(e)
+                    # Ignore any exceptions for now.
+                    pass
+                print(f"Sending output to Kafka")
+                KafkaProducer.send_files(broker_address, forecast_file)
+                print(f"Preparing next simulation...")
+                output_path = "/hipims/Outputs"
+                for hipims_output in os.listdir(output_path):
+                    os.remove(os.path.join(output_path, hipims_output))
+
             # with open('rain_source_data_1.csv', mode='wb+') as rain_source:
             #     rain_source.write(data)
             #
@@ -64,14 +80,7 @@ for message in consumer:
             # print('data set up...')
             # rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
             # run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
-            try:
-                combine_mgpu_results.combine_save()
-            except Exception as e:
-                print(e)
-                # Ignore any exceptions for now.
-                pass
-            print(f"Simulation ended at {datetime.now()}. Sending output...")
-            KafkaProducer.send_files(broker_address)
+            print(f"Simulation ended at {datetime.now()}")
             print("Cleaning up input files")
             os.remove(tmp_zip.name)
             shutil.rmtree(tmp)
