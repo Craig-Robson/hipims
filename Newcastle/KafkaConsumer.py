@@ -46,6 +46,7 @@ for message in consumer:
         if message.topic == "hipims_forecast":
             print(f"Received {len(message.value) + len(message.key)} bytes")
             print("Unzipping forecasts")
+            forecast_uuid = str(message.key, 'utf-8')
             data = gzip.decompress(message.value)
             tmp = tempfile.mkdtemp()
             tmp_zip = tempfile.NamedTemporaryFile(mode='wb', delete=False)
