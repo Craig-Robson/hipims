@@ -61,7 +61,7 @@ for message in consumer:
             tmp = tempfile.mkdtemp()
             tmp_zip = tempfile.NamedTemporaryFile(mode='wb', delete=False)
             tmp_zip.write(data)
-            tmp_zip.close()
+            tmp_zip.seek(0)
             with zipfile.ZipFile(tmp_zip, mode='r') as extract:
                 extract.extractall(tmp)
 
