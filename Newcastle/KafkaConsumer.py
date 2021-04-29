@@ -4,6 +4,7 @@ import os
 import time
 
 from kafka import KafkaConsumer
+from kafka.errors import KafkaError
 from kafka.admin import KafkaAdminClient, NewTopic
 
 import KafkaProducer
@@ -22,7 +23,16 @@ if broker_address == "":
 topics = ["hipims_forecast"]
 producer_topics = ["hipims"]
 # Consumer can pull up to 25 MB
-consumer = KafkaConsumer(bootstrap_servers=broker_address, max_partition_fetch_bytes=25000000)
+consumer = None
+try:
+    consumer = KafkaConsumer(bootstrap_servers=broker_address, max_partition_fetch_bytes=25000000)
+except KafkaError as e:
+    print(e)
+    # The hipims module is loaded concurrently and exceptions cannot properly exit the script
+    # Tear down everything and start over
+    # noinspection PyUnresolvedReferences,PyProtectedMember
+    os._exit(1)
+
 # Check for current made topics
 current_topics = consumer.topics()
 topics_to_create = set(topics).union(set(producer_topics)) - current_topics
