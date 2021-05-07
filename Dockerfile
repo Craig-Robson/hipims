@@ -55,4 +55,4 @@ VOLUME /hipims/Outputs
 # Run on local
 # CMD git pull && python3 Newcastle/run_NCL_2m_MG.py && python3 Newcastle/combine_mgpu_results.py
 # Run through Kafka messaging
-CMD python3 Newcastle/KafkaConsumer.py
+CMD python3 -u Newcastle/KafkaConsumer.py
