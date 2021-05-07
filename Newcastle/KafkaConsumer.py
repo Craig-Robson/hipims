@@ -79,7 +79,7 @@ for message in consumer:
                     # Ignore any exceptions for now.
                     pass
                 print(f"Sending output to Kafka")
-                KafkaProducer.send_files(broker_address, forecast_file)
+                KafkaProducer.send_files(broker_address, forecast_file, forecast_uuid)
                 print(f"Preparing next simulation...")
                 output_path = "/hipims/Outputs"
                 for hipims_output in os.listdir(output_path):
