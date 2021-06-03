@@ -47,5 +47,4 @@ for forecast_file in os.listdir(tmp):
 # run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
 print(f"Simulation ended at {datetime.now()}")
 print("Cleaning up input files")
-os.remove(tmp_zip.name)
 shutil.rmtree(tmp)
