@@ -13,7 +13,7 @@ case_folder = os.path.dirname(file_path)+'/Model_IO'
 dem_file = data_folder + '/DEM2m.gz'
 # load rainfall data
 rain_mask_obj = Raster(data_folder + '/rain_mask_UO_radar.gz')
-rain_source_mat = np.loadtxt(data_folder + '/Data/dataset_1.csv',
+rain_source_mat = np.loadtxt(data_folder + '/data/dataset_1.csv',
                                  delimiter=',')
 rain_source = np.c_[np.arange(0, 3600 * 12, 600),
                         rain_source_mat.transpose() / 3600 / 1000]
