@@ -13,9 +13,9 @@ from datetime import datetime
 print("Running")
 print("Unzipping forecasts")
 
-data = '/hipims/Newcastle/data/dataset_1.csv'
+data = '/hipims/Newcastle/rain_source_data_1.csv'
 tmp = tempfile.mkdtemp()
-shutil.copyfile(data,tmp+'/dataset_1.csv')
+shutil.copyfile(data,tmp+'/rain_source_data_1.csv')
 
 hours_to_run = 12
 
