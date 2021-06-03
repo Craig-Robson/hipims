@@ -15,7 +15,7 @@ print("Unzipping forecasts")
 
 data = 'himpims/Newcastle/data/dataset_1.csv'
 tmp = tempfile.mkdtemp()
-shutil.copyfile(data,temp+'/dataset_1.csv')
+shutil.copyfile(data,tmp+'/dataset_1.csv')
 
 hours_to_run = 12
 
