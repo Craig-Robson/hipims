@@ -15,12 +15,12 @@ dem_file = data_folder + '/DEM2m.gz'
 rain_mask_obj = Raster(data_folder + '/rain_mask_UO_radar.gz')
 rain_source_mat = np.loadtxt(data_folder + '/rain_source_data_1.csv',
                                  delimiter=',')
-rain_source = np.c_[np.arange(0, 3600 * 3, 600),
+rain_source = np.c_[np.arange(0, 3600 * 12, 600),
                         rain_source_mat.transpose() / 3600 / 1000]
 # load gauge data
 gauges_pos = pd.read_csv(data_folder + '/gauges_pos.csv', delimiter=',')
 gauges_pos = gauges_pos.values[:, 1:]
-time_values = [0, 3600 * 1, 600, 3600 * 3]
+time_values = [0, 3600 * 1, 600, 3600 * 12]
 # setup input object
 input_obj = InputHipims(dem_data=dem_file, num_of_sections=1,
                                case_folder=case_folder)
