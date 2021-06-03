@@ -16,11 +16,13 @@ print("Unzipping forecasts")
 data = 'data/dataset_1.csv'
 tmp = data
 
+hours_to_run = 12
+
 # Unzipped forecasts located in /tmp/{random directory} (Use the tmp variable)
 print(f"Starting simulation at {datetime.now()}")
 for forecast_file in os.listdir(tmp):
     print(f"Running simulator for {forecast_file}...")
-    run_NCL_2m_MG.run_mg(rain_source_file=os.path.join(tmp, forecast_file), run_time=[0, 10800, 600, 108000])
+    run_NCL_2m_MG.run_mg(rain_source_file=os.path.join(tmp, forecast_file), run_time=[0, 3600 * 12, 600, 108000])
     print(f"Combining results...")
     try:
         combine_mgpu_results.combine_save()
