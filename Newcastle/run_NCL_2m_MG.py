@@ -25,7 +25,7 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
     if rain_source_file is not None:
         rain_source_mat = np.loadtxt(rain_source_file,
                                      delimiter=',')
-        rain_source = np.c_[np.arange(0, 3600 * 3, 600),
+        rain_source = np.c_[np.arange(0, 3600 * 12, 600),
                             rain_source_mat.transpose() / 3600 / 1000]
         input_obj.set_rainfall(rain_source=rain_source)
         input_obj.write_rainfall_source()
@@ -48,4 +48,4 @@ def run_mg(model_name=model_name, rain_source_file=None, run_time=None):
 
 
 if __name__ == '__main__':
-    run_mg(model_name, rain_source_file=file_path + '/rain_source_data_1.csv', run_time=[0, 10800, 600, 108000])
+    run_mg(model_name, rain_source_file=file_path + '/rain_source_data_1.csv', run_time=[0, 3600*12, 600, 108000])
