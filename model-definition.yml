@@ -1,0 +1,21 @@
+# model-definition.yml
+
+kind: Model
+apiVersion: v1alpha4
+
+metadata:
+  displayName: HiPIMS
+  name: hipims flood model
+  summary: Hydrodynamic flood model (HiPIMS) for high resolution flood modelling
+  description: >
+    HiPIMS allows for high resolution flood modelling using GPU processing methods to execute the modelling in quick
+    execution times.
+  type: model
+
+spec:
+  inputs:
+
+  outputs:
+    datasets:
+      - name: flood outputs
+        desc: Set of files describing the floodig at time steps through the analysis
