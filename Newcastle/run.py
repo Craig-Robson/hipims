@@ -26,6 +26,7 @@ for forecast_file in os.listdir(tmp):
     run_NCL_2m_MG.run_mg(rain_source_file=os.path.join(tmp, forecast_file), run_time=[0, 3600 * 12, 600, 3600 * 12 * 10])
     print(f"Combining results...")
     try:
+        # this saves the files to a dir
         combine_mgpu_results.combine_save()
     except Exception as e:
         print(e)
@@ -33,17 +34,18 @@ for forecast_file in os.listdir(tmp):
         pass
 
     print(f"Preparing next simulation...")
-    output_path = "/hipims/Outputs"
-    for hipims_output in os.listdir(output_path):
-        print('copy files to output dir')
+    # output dir from hipims
+    hipims_output_path = "/hipims/Outputs"
 
-# with open('rain_source_data_1.csv', mode='wb+') as rain_source:
-#     rain_source.write(data)
-#
-# time.sleep(5)
-# print('data set up...')
-# rain_source_file = os.getcwd()+'/rain_source_data_1.csv'
-# run_NCL_2m_MG.run_mg(rain_source_file=rain_source_file, run_time=[0, 10800, 600, 108000])
+    #expected directory for hipims
+    dafni_output_path = os.getenv('DATA_PATH', '/data')
+    dafni_output_path = os.path.join(dafni_output_path, 'outputs')
+
+    # copy files into dafni output directory
+    for hipims_output in os.listdir(hipims_output_path):
+        print('copy files to output dir')
+        shutil.copy(os.path.join(hipims_output_path,hipims_output), dafni_output_path)
+
 print(f"Simulation ended at {datetime.now()}")
 print("Cleaning up input files")
 shutil.rmtree(tmp)

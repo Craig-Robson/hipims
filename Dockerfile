@@ -47,7 +47,9 @@ RUN python Newcastle/generate_ncl_inputs.py 4
 #CMD ["ls Newcastle/"]
 #CMD ["python3" "Newcastle/generate_ncl_inputs.py"]
 
-
+# create a data dir (this is where DAFNI will check for the data)
+RUN mkdir /data
+RUN mkdir /data/outputs
 #Mount output directories. Must be container directory
 VOLUME /hipims/Outputs
 
