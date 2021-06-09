@@ -31,7 +31,6 @@ for forecast_file in os.listdir(tmp):
         print(e)
         # Ignore any exceptions for now.
         pass
-    print(f"Sending output to Kafka")
 
     print(f"Preparing next simulation...")
     output_path = "/hipims/Outputs"
