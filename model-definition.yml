@@ -13,9 +13,10 @@ metadata:
   type: model
 
 spec:
-  inputs:
-
+  resources:
+    useGPU: True
   outputs:
     datasets:
       - name: flood outputs
         desc: Set of files describing the floodig at time steps through the analysis
+
