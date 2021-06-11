@@ -41,7 +41,7 @@ RUN cmake . -DCMAKE_BUILD_TYPE=Release  && \
 
 # create input folder and files for HiPIMS
 # Change the number to specify the number of GPUs to be used
-RUN python Newcastle/generate_ncl_inputs.py 4
+RUN python Newcastle/generate_ncl_inputs.py 1
 
 #CMD ["git", "pull"] # renew codes from github repo https://github.com/flood-PREPARED/hipims.git
 #CMD ["ls Newcastle/"]

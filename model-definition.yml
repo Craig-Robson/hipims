@@ -5,7 +5,7 @@ apiVersion: v1alpha4
 
 metadata:
   displayName: HiPIMS
-  name: hipims flood model
+  name: hipims-flood-model
   summary: Hydrodynamic flood model (HiPIMS) for high resolution flood modelling
   description: >
     HiPIMS allows for high resolution flood modelling using GPU processing methods to execute the modelling in quick

@@ -27,6 +27,7 @@ input_obj = InputHipims(dem_data=dem_file, num_of_sections=1,
 input_obj.set_runtime(time_values)
 input_obj.set_rainfall(rain_mask=rain_mask_obj.array, rain_source=rain_source)
 input_obj.set_gauges_position(gauges_pos=gauges_pos)
+
 # write input files
 def setup_model():
     args = sys.argv
@@ -45,5 +46,14 @@ def setup_model():
         obj_out.save_object('obj_out')
     else:
         raise IOError('Only one int parameter is needed.')
+
+    print('===================')
+    print('Input Obj:')
+    print(input_obj)
+    print('===================')
+    print('Output Obj:')
+    print(obj_out)
+    print('===================')
+
 if __name__=='__main__':
     setup_model()
