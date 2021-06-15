@@ -11,8 +11,15 @@ simulation_names = ['1','2','3','4','7','8']
 
 
 def run(simulation_name=''):
+    """
+    Setup HiPIMS
+    """
+    dafni_data_path = os.getenv('DATA_PATH', '/data')
+    dafni_output_path = os.path.join(dafni_data_path, 'outputs')
+
+
     # create the simulation folder
-    case_folder = os.path.join('/home/ncr48/hipims_case_%s' %simulation_name)
+    case_folder = os.path.join(dafni_data_path, 'hipims_case_%s' %simulation_name)
 
     # get the path to the data
 
@@ -20,19 +27,19 @@ def run(simulation_name=''):
 
     # ['rain_mask.gz', 'rain_source.csv', 'landcover.gz', 'DEM.gz']
 
-    data_folder = os.path.dirname('/home/ncr48/hipims/Newcastle/')
+    data_folder = os.path.dirname(os.path.join(dafni_data_path, 'hipims/'))
 
     # set DEM path
 
-    dem_file = data_folder + '/DEM2m.gz'
+    dem_file = os.path.join(data_folder,'DEM2m.gz')
 
     # load rainfall data
 
     rain_mask_obj = Raster(data_folder + '/rain_mask_UO_radar.gz')
 
-    rain_source_mat = np.loadtxt('/home/ncr48/fp_data/data/data_%s.csv' %simulation_name, delimiter=',')
+    rain_source_mat = np.loadtxt(os.path.join('/hipims/Newcastle/data/%s.csv' %simulation_name), delimiter=',')
 
-    rain_source = np.c_[np.arange(0, 3600 * 3, 600), rain_source_mat.transpose() / 3600 / 1000]
+    rain_source = np.c_[np.arange(0, 3600 * 12, 600), rain_source_mat.transpose() / 3600 / 1000]
 
     # load gauge dataexit|()
 
@@ -40,7 +47,7 @@ def run(simulation_name=''):
 
     gauges_pos = gauges_pos.values[:, 1:]
 
-    time_values = [0, 10800, 600, 10800]  # [0, 3600 * 1, 600, 3600 * 3]
+    time_values = [0, 3600 * 1, 600, 3600 * 12]  # [0, 3600 * 1, 600, 3600 * 3]
 
     # setup input object
 
@@ -76,12 +83,4 @@ def run(simulation_name=''):
 
     obj_out.save_object(case_folder+'/obj_out')
 
-    # run the model
-
-    from pypims import flood
-
-    flood.run(case_folder)
-
-
-for name in simulation_names:
-    run(simulation_name=name)
+run(simulation_name='dataset_1')
