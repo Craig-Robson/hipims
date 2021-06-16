@@ -1,11 +1,14 @@
 import os
 import sys
 import time
+import shutil
+from distutils.dir_util import copy_tree
 import numpy as np
 import pandas as pd
 from hipims_io import InputHipims
 from hipims_io import OutputHipims
 from hipims_io.Raster import Raster
+from pypims import flood
 
 simulation_names = ['1','2','3','4','7','8']
 
@@ -14,12 +17,13 @@ def run(simulation_name=''):
     """
     Setup HiPIMS
     """
+    data_path = '/hipims/Newcastle/'
     dafni_data_path = os.getenv('DATA_PATH', '/data')
     dafni_output_path = os.path.join(dafni_data_path, 'outputs')
 
 
     # create the simulation folder
-    case_folder = os.path.join(dafni_data_path, 'hipims_case_%s' %simulation_name)
+    case_folder = os.path.join(data_path, 'hipims_case_%s' %simulation_name)
 
     # get the path to the data
 
@@ -27,7 +31,7 @@ def run(simulation_name=''):
 
     # ['rain_mask.gz', 'rain_source.csv', 'landcover.gz', 'DEM.gz']
 
-    data_folder = os.path.dirname(os.path.join(dafni_data_path, 'hipims/'))
+    data_folder = os.path.dirname(os.path.join(data_path))
 
     # set DEM path
 
@@ -47,7 +51,8 @@ def run(simulation_name=''):
 
     gauges_pos = gauges_pos.values[:, 1:]
 
-    time_values = [0, 3600 * 1, 600, 3600 * 12]  # [0, 3600 * 1, 600, 3600 * 3]
+    # time_setup.dat - four values respectively indicate model start time, total time, output interval, and backup interval in seconds
+    time_values = [0, 3600 * 12, 600, 3600 * 12]  # [0, 3600 * 1, 600, 3600 * 3]
 
     # setup input object
 
@@ -82,5 +87,12 @@ def run(simulation_name=''):
     obj_out.grid_file_tags = output_file_tags
 
     obj_out.save_object(case_folder+'/obj_out')
+
+    # run HIPIMS
+    flood.run(case_folder)
+
+    # copy output into DAFNI output directory
+    copy_tree('/hipims/Newcastle/hipims_case_dataset_1/output', '/data/outputs')
+
 
 run(simulation_name='dataset_1')

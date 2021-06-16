@@ -19,11 +19,12 @@ RUN conda install python=3.6
 RUN conda install -y gdal
 RUN conda install -c conda-forge pyshp fiona kafka-python
 # install hipims
-RUN pip install hipims_io==0.4.9 #, pypims
+RUN pip install hipims_io==0.4.9
 
 # Set CUDA_ROOT
 ENV CUDA_ROOT /usr/local/cuda/bin
 RUN apt-get install -y wget cmake python3-pip
+RUN pip install cmake pypims
 
 # get hipims code, input data, and python script to setup and run hipims model
 RUN mkdir -p /hipims
@@ -50,11 +51,4 @@ RUN cmake . -DCMAKE_BUILD_TYPE=Release  && \
 VOLUME /hipims/Outputs
 
 # Entrypoint, comment out either one of the CMD instructions
-# Run on local
-# CMD git pull && python3 Newcastle/run_NCL_2m_MG.py && python3 Newcastle/combine_mgpu_results.py
-# Run through Kafka messaging
-#CMD python3 -u Newcastle/run.py
-#CMD python3 run_script.py
-RUN python3 Newcastle/run_script.py
-
-CMD  python3 Newcastle/run.py
+CMD python3 Newcastle/run_script.py
