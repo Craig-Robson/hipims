@@ -95,4 +95,5 @@ def run(simulation_name=''):
     copy_tree('/hipims/Newcastle/hipims_case_dataset_1/output', '/data/outputs')
 
 
-run(simulation_name='dataset_1')
+forecast_id = os.getenv('ForecastID')
+run(simulation_name='dataset_%s' %int(forecast_id))

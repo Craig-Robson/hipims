@@ -15,6 +15,15 @@ metadata:
 spec:
   resources:
     useGPU: True
+  inputs:
+    env:
+      - name: ForecastID
+        title: Forecast ID
+        desc: Rainfall forecast ID
+        type: integer
+        default: 1
+        min: 1
+        max: 11
   outputs:
     datasets:
       - name: flood outputs
