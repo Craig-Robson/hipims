@@ -92,7 +92,7 @@ def run(simulation_name=''):
     flood.run(case_folder)
 
     # copy output into DAFNI output directory
-    copy_tree('/hipims/Newcastle/hipims_case_dataset_1/output', '/data/outputs')
+    copy_tree(os.path.join(case_folder, 'output'), '/data/outputs')
 
 
 forecast_id = os.getenv('ForecastID')
