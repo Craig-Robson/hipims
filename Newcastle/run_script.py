@@ -2,6 +2,8 @@ import os
 import sys
 import time
 import shutil
+from os import getenv
+from os.path import join
 from distutils.dir_util import copy_tree
 import numpy as np
 import pandas as pd
@@ -17,13 +19,15 @@ def run(simulation_name=''):
     """
     Setup HiPIMS
     """
-    data_path = '/hipims/Newcastle/'
-    dafni_data_path = os.getenv('DATA_PATH', '/data')
-    dafni_output_path = os.path.join(dafni_data_path, 'outputs')
+    # get the data folder location
+    dafni_data_path = '/data'
 
+    # set some file paths
+    data_path = '/hipims/Newcastle/'
+    dafni_output_path = join(dafni_data_path, 'outputs')
 
     # create the simulation folder
-    case_folder = os.path.join(data_path, 'hipims_case_%s' %simulation_name)
+    case_folder = join(dafni_data_path, 'hipims_case_%s' %simulation_name)
 
     # get the path to the data
 
@@ -31,23 +35,23 @@ def run(simulation_name=''):
 
     # ['rain_mask.gz', 'rain_source.csv', 'landcover.gz', 'DEM.gz']
 
-    data_folder = os.path.dirname(os.path.join(data_path))
+    data_folder = os.path.dirname(join(data_path))
 
     # set DEM path
 
-    dem_file = os.path.join(data_folder,'DEM2m.gz')
+    dem_file = join(data_folder,'dem','DEM2m.gz')
 
     # load rainfall data
 
-    rain_mask_obj = Raster(data_folder + '/rain_mask_UO_radar.gz')
+    rain_mask_obj = Raster(join(data_folder, 'mask', '/rain_mask_UO_radar.gz'))
 
-    rain_source_mat = np.loadtxt(os.path.join('/hipims/Newcastle/data/%s.csv' %simulation_name), delimiter=',')
+    rain_source_mat = np.loadtxt(join(data_folder, 'rainfall', '%s.csv' %simulation_name), delimiter=',')
 
     rain_source = np.c_[np.arange(0, 3600 * 12, 600), rain_source_mat.transpose() / 3600 / 1000]
 
     # load gauge dataexit|()
 
-    gauges_pos = pd.read_csv(data_folder + '/gauges_pos.csv', delimiter=',')
+    gauges_pos = pd.read_csv(join(data_folder, 'gauges', 'gauges_pos.csv', delimiter=','))
 
     gauges_pos = gauges_pos.values[:, 1:]
 
@@ -76,7 +80,7 @@ def run(simulation_name=''):
 
     # save input object
 
-    input_obj_MG.save_object(case_folder + '/obj_in')
+    input_obj_MG.save_object(join(case_folder, 'obj_in'))
 
     obj_out = OutputHipims(input_obj_MG)
 
@@ -86,13 +90,13 @@ def run(simulation_name=''):
 
     obj_out.grid_file_tags = output_file_tags
 
-    obj_out.save_object(case_folder+'/obj_out')
+    obj_out.save_object(join(case_folder,'obj_out'))
 
     # run HIPIMS
     flood.run(case_folder)
 
     # copy output into DAFNI output directory
-    copy_tree(os.path.join(case_folder, 'output'), '/data/outputs')
+    copy_tree(join(case_folder, 'output'), dafni_output_path)
 
 
 forecast_id = os.getenv('ForecastID')
