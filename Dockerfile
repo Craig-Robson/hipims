@@ -38,7 +38,7 @@ COPY apps /hipims/apps
 COPY hipims_io /hipims/hipims_io
 COPY lib /hipims/lib
 COPY Newcastle /hipims/Newcastle
-COPY Newcastle /data/hipims
+COPY data /data
 COPY CMakeLists.txt /hipims
 COPY LICENSE.txt /hipims
 #RUN pwd

@@ -2,8 +2,8 @@ import os
 import sys
 import time
 import shutil
-from os import getenv
-from os.path import join
+from os import getenv, listdir
+from os.path import join, isfile
 from distutils.dir_util import copy_tree
 import numpy as np
 import pandas as pd
@@ -32,7 +32,8 @@ def run(simulation_name=''):
     dafni_data_path = '/data'
 
     # set some file paths
-    data_path = '/hipims/Newcastle/'
+    #data_path = '/hipims/Newcastle/'
+    data_path = dafni_data_path
     dafni_output_path = join(dafni_data_path, 'outputs')
 
     # create the simulation folder
@@ -44,7 +45,7 @@ def run(simulation_name=''):
 
     # ['rain_mask.gz', 'rain_source.csv', 'landcover.gz', 'DEM.gz']
 
-    data_folder = os.path.dirname(join(data_path))
+    data_folder = join(data_path) #os.path.dirname(join(data_path))
 
     # set DEM path
 
