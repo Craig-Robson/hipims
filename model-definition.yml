@@ -1,16 +1,17 @@
 # model-definition.yml
 
 kind: Model
-apiVersion: v1alpha4
+api_version: v1beta1
 
 metadata:
   displayName: HiPIMS
   name: hipims-flood-model
   summary: Hydrodynamic flood model (HiPIMS) for high resolution flood modelling
+  publisher: Newcastle University
+  source_code: https://github.com/craig-robson/hipims
   description: >
     HiPIMS allows for high resolution flood modelling using GPU processing methods to execute the modelling in quick
     execution times.
-  type: model
 
 spec:
   resources:
@@ -22,7 +23,6 @@ spec:
         desc: A name for the simulation
         type: string
         default: 'hipims simulation'
-
   dataslots:
     - name: DEM
       description: The DEM covering the area of interest
