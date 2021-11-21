@@ -15,6 +15,15 @@ from pypims import flood
 simulation_names = ['1','2','3','4','7','8']
 
 
+def find_file(path=''):
+    """
+    Given a directory find the file within
+    """
+    files = [f for f in listdir(join(path)) if isfile(join(path, f))]
+
+    return files[0]
+
+
 def run(simulation_name=''):
     """
     Setup HiPIMS
@@ -39,19 +48,21 @@ def run(simulation_name=''):
 
     # set DEM path
 
-    dem_file = join(data_folder,'dem','DEM2m.gz')
+    file = find_file(join(data_folder, 'dem')) # e.g. 'DEM2m.gz'
+    dem_file = join(data_folder,'dem', file)
 
     # load rainfall data
+    file = find_file(join(data_folder, 'mask'))
+    rain_mask_obj = Raster(join(data_folder, 'mask', file))
 
-    rain_mask_obj = Raster(join(data_folder, 'mask', 'rain_mask_UO_radar.gz'))
-
-    rain_source_mat = np.loadtxt(join(data_folder, 'rainfall', '%s.csv' %simulation_name), delimiter=',')
+    file = find_file(join(data_folder, 'rainfall'))
+    rain_source_mat = np.loadtxt(join(data_folder, 'rainfall', file), delimiter=',')
 
     rain_source = np.c_[np.arange(0, 3600 * 12, 600), rain_source_mat.transpose() / 3600 / 1000]
 
     # load gauge dataexit|()
-
-    gauges_pos = pd.read_csv(join(data_folder, 'gauges', 'gauges_pos.csv', delimiter=','))
+    file = find_file(join(data_folder, 'gauges'))
+    gauges_pos = pd.read_csv(join(data_folder, 'gauges', file), delimiter=',')
 
     gauges_pos = gauges_pos.values[:, 1:]
 
@@ -99,5 +110,5 @@ def run(simulation_name=''):
     copy_tree(join(case_folder, 'output'), dafni_output_path)
 
 
-forecast_id = os.getenv('ForecastID')
-run(simulation_name='dataset_%s' %int(forecast_id))
+simulation_name = getenv('simulation_name')
+run(simulation_name=simulation_name)
