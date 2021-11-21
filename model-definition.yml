@@ -31,8 +31,26 @@ spec:
       path: dem/
       required: true
       default:
-        - 383dfcba-c0d3-4e3c-aaba-48f456f5d2eb
-        -
+        - d7293e33-2587-4d67-804a-843aba756169
+    - name: Reporting locations
+      description: A set of locations (points) used for reporting flood model outputs (as well as surface data outputs)
+      path: gauges/
+      required: true
+      default:
+        - 8e90752e-a5ee-4149-8bab-738d53326f9e
+    - name: Rainfall data
+      description: A set of rainfall data
+      path: rainfall/
+      required: true
+      default:
+        - eda70002-3bbc-4e19-a3c6-194eb04f8cf1
+    - name: Mask
+      description: A rainfall mask
+      path: mask/
+      required: true
+      default:
+        - 573b7476-6eb1-4b8b-9c14-b647a22ea6ca
+
   outputs:
     datasets:
       - name: flood outputs
