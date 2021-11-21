@@ -43,7 +43,7 @@ def run(simulation_name=''):
 
     # load rainfall data
 
-    rain_mask_obj = Raster(join(data_folder, 'mask', '/rain_mask_UO_radar.gz'))
+    rain_mask_obj = Raster(join(data_folder, 'mask', 'rain_mask_UO_radar.gz'))
 
     rain_source_mat = np.loadtxt(join(data_folder, 'rainfall', '%s.csv' %simulation_name), delimiter=',')
 
