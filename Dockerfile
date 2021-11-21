@@ -17,7 +17,7 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
 # Use python 3.6 due to syntax incompatibility with python 3.7+
 RUN conda install python=3.6
 RUN conda install -y gdal
-RUN conda install -c conda-forge pyshp fiona kafka-python
+RUN conda install -c conda-forge pyshp fiona kafka-python rasterio
 # install hipims
 RUN pip install hipims_io==0.4.9
 
