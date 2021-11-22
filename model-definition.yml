@@ -4,7 +4,7 @@ kind: Model
 api_version: v1beta1
 
 metadata:
-  displayName: HiPIMS
+  display_name: HiPIMS
   name: hipims-flood-model
   summary: Hydrodynamic flood model (HiPIMS) for high resolution flood modelling
   publisher: Newcastle University
@@ -17,10 +17,10 @@ spec:
   resources:
     useGPU: True
   inputs:
-    env:
+    parameters:
       - name: simulation_name
         title: Simualtion Name
-        desc: A name for the simulation
+        description: A name for the simulation
         type: string
         default: 'hipims simulation'
   dataslots:
@@ -53,4 +53,3 @@ spec:
     datasets:
       - name: flood outputs
         desc: Set of files describing the floodig at time steps through the analysis
-
