@@ -17,20 +17,28 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
 # Use python 3.6 due to syntax incompatibility with python 3.7+
 RUN conda install python=3.6
 RUN conda install -y gdal
-RUN conda install -c conda-forge pyshp fiona kafka-python
+RUN conda install -c conda-forge pyshp fiona kafka-python rasterio
 # install hipims
 RUN pip install hipims_io==0.4.9
 
 # Set CUDA_ROOT
 ENV CUDA_ROOT /usr/local/cuda/bin
 RUN apt-get install -y wget cmake python3-pip
+RUN pip install cmake pypims
 
 # get hipims code, input data, and python script to setup and run hipims model
 RUN mkdir -p /hipims
+
+# create a data dir (this is where DAFNI will check for the data)
+RUN mkdir /data
+RUN mkdir /data/outputs
+
+# copy files over
 COPY apps /hipims/apps
 COPY hipims_io /hipims/hipims_io
 COPY lib /hipims/lib
 COPY Newcastle /hipims/Newcastle
+COPY data /data
 COPY CMakeLists.txt /hipims
 COPY LICENSE.txt /hipims
 #RUN pwd
@@ -39,20 +47,8 @@ WORKDIR hipims
 RUN cmake . -DCMAKE_BUILD_TYPE=Release  && \
     make -j"$(nproc)"
 
-# create input folder and files for HiPIMS
-# Change the number to specify the number of GPUs to be used
-RUN python Newcastle/generate_ncl_inputs.py 4
-
-#CMD ["git", "pull"] # renew codes from github repo https://github.com/flood-PREPARED/hipims.git
-#CMD ["ls Newcastle/"]
-#CMD ["python3" "Newcastle/generate_ncl_inputs.py"]
-
-
 #Mount output directories. Must be container directory
 VOLUME /hipims/Outputs
 
 # Entrypoint, comment out either one of the CMD instructions
-# Run on local
-# CMD git pull && python3 Newcastle/run_NCL_2m_MG.py && python3 Newcastle/combine_mgpu_results.py
-# Run through Kafka messaging
-CMD python3 -u Newcastle/KafkaConsumer.py
+CMD python3 Newcastle/run_script.py

@@ -13,20 +13,21 @@ case_folder = os.path.dirname(file_path)+'/Model_IO'
 dem_file = data_folder + '/DEM2m.gz'
 # load rainfall data
 rain_mask_obj = Raster(data_folder + '/rain_mask_UO_radar.gz')
-rain_source_mat = np.loadtxt(data_folder + '/rain_source_data_1.csv',
+rain_source_mat = np.loadtxt(data_folder + '/data/dataset_1.csv',
                                  delimiter=',')
-rain_source = np.c_[np.arange(0, 3600 * 3, 600),
+rain_source = np.c_[np.arange(0, 3600 * 12, 600),
                         rain_source_mat.transpose() / 3600 / 1000]
 # load gauge data
 gauges_pos = pd.read_csv(data_folder + '/gauges_pos.csv', delimiter=',')
 gauges_pos = gauges_pos.values[:, 1:]
-time_values = [0, 3600 * 1, 600, 3600 * 3]
+time_values = [0, 3600 * 1, 600, 3600 * 12]
 # setup input object
 input_obj = InputHipims(dem_data=dem_file, num_of_sections=1,
                                case_folder=case_folder)
 input_obj.set_runtime(time_values)
 input_obj.set_rainfall(rain_mask=rain_mask_obj.array, rain_source=rain_source)
 input_obj.set_gauges_position(gauges_pos=gauges_pos)
+
 # write input files
 def setup_model():
     args = sys.argv
@@ -45,5 +46,14 @@ def setup_model():
         obj_out.save_object('obj_out')
     else:
         raise IOError('Only one int parameter is needed.')
+
+    print('===================')
+    print('Input Obj:')
+    print(input_obj)
+    print('===================')
+    print('Output Obj:')
+    print(obj_out)
+    print('===================')
+
 if __name__=='__main__':
     setup_model()
