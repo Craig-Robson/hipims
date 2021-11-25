@@ -24,6 +24,25 @@ spec:
         type: string
         required: true
         default: 'hipims simulation'
+      - name: model_start_time
+        title: Start time (seconds)
+        description: The start time (seconds) for the model
+        type: integer
+        required: true
+        default: 0
+      - name: model_run_time
+        title: Run time (seconds)
+        description: The number of seconds to run the simulation for
+        type: integer
+        required: true
+        default: 43200
+      - name: model_output_interval
+        title: Output interval (seonds)
+        description: The interval (seconds) to save outputs/flood state
+        type: integer
+        required: true
+        default: 600
+
     dataslots:
       - name: DEM
         description: The DEM covering the area of interest

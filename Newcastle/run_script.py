@@ -12,8 +12,6 @@ from hipims_io import OutputHipims
 from hipims_io.Raster import Raster
 from pypims import flood
 
-simulation_names = ['1','2','3','4','7','8']
-
 
 def find_file(path=''):
     """
@@ -24,10 +22,11 @@ def find_file(path=''):
     return files[0]
 
 
-def run(simulation_name=''):
+def run(simulation_name, start_time, run_time, output_interval, backup_interval, rain_start_time, rain_run_time):
     """
     Setup HiPIMS
     """
+
     # get the data folder location
     dafni_data_path = '/data'
 
@@ -58,8 +57,7 @@ def run(simulation_name=''):
 
     file = find_file(join(data_folder, 'rainfall'))
     rain_source_mat = np.loadtxt(join(data_folder, 'rainfall', file), delimiter=',')
-
-    rain_source = np.c_[np.arange(0, 3600 * 12, 600), rain_source_mat.transpose() / 3600 / 1000]
+    rain_source = np.c_[np.arange(rain_start_time, rain_run_time, 600), rain_source_mat.transpose() / 3600 / 1000]
 
     # load gauge dataexit|()
     file = find_file(join(data_folder, 'gauges'))
@@ -68,7 +66,7 @@ def run(simulation_name=''):
     gauges_pos = gauges_pos.values[:, 1:]
 
     # time_setup.dat - four values respectively indicate model start time, total time, output interval, and backup interval in seconds
-    time_values = [0, 3600 * 12, 600, 3600 * 12]  # [0, 3600 * 1, 600, 3600 * 3]
+    time_values = [start_time, run_time, output_interval, backup_interval]  # [0, 3600 * 1, 600, 3600 * 3]
 
     # setup input object
 
@@ -110,6 +108,23 @@ def run(simulation_name=''):
     # copy output into DAFNI output directory
     copy_tree(join(case_folder, 'output'), dafni_output_path)
 
+# get input parameters
 
+
+# get name for simulation
 simulation_name = getenv('simulation_name')
-run(simulation_name=simulation_name)
+
+# model start time
+model_start_time = getenv('model_start_time') # default is 0
+
+model_run_time = getenv('model_run_time') # default is 43200 (3600 * 12)
+
+model_output_interval = getenv('model_output_interval') # default is 600
+
+model_backup_interval = model_run_time
+
+# rain source
+rain_source_start_time = model_start_time
+rain_source_run_time = model_run_time
+
+run(simulation_name=simulation_name, start_time=model_start_time, run_time=model_run_time, output_interval=model_output_interval, backup_interval=model_run_time, rain_start_time =rain_source_start_time, rain_run_time=rain_source_run_time)
