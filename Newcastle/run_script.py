@@ -115,11 +115,11 @@ def run(simulation_name, start_time, run_time, output_interval, backup_interval,
 simulation_name = getenv('simulation_name')
 
 # model start time
-model_start_time = getenv('model_start_time') # default is 0
+model_start_time = int(getenv('model_start_time')) # default is 0
 
-model_run_time = getenv('model_run_time') # default is 43200 (3600 * 12)
+model_run_time = int(getenv('model_run_time')) # default is 43200 (3600 * 12)
 
-model_output_interval = getenv('model_output_interval') # default is 600
+model_output_interval = int(getenv('model_output_interval')) # default is 600
 
 model_backup_interval = model_run_time
 
